@@ -1,7 +1,5 @@
 #include <iostream>
-#include <stdexcept>
 #include <iomanip>
-#include <math.h>
 #include "Computation.h"
 
 using namespace std;
@@ -57,15 +55,24 @@ class Statistician : Computation
 
 // class constructors
 Statistician::Statistician(){
-    num = 0;
+    this->num = 0.0;
+    lowest = 0.0;
+    highest = 0.0;
+    sum = 0.0;
 }
 
 Statistician::Statistician(double num){
     this->num = num;
+    lowest = num;
+    highest = num;
+    sum = num;
 }
 
 void Statistician::addNumber(double num){
     this->num = num;
+    computeHighest();
+    computeLowest();
+    computeSum();
 }
 
 void Statistician::getStatistician(double& lowest, double& highest, double& sum) const {
@@ -87,7 +94,7 @@ void Statistician::computeHighest(){
 }
 
 void Statistician::computeSum(){
-    sum = sum + num;
+    sum += num;
 }
 
 void Statistician::printStatistician() const {
@@ -96,7 +103,7 @@ void Statistician::printStatistician() const {
     cout << "lowest=" << lowest << ", highest=" << highest << ", sum=" << sum << endl;
 }
 
-bool Statistician::equalStatistician(const Statistician& otherStatistician) const {
-    return (num == otherStatistician.num &&
-        sum == otherStatistician.sum);
+bool Statistician::equalStatistician(const Statistician& other) const {
+    return (lowest == other.lowest &&
+        highest == other.highest && sum == other.sum);
 }
